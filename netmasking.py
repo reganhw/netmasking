@@ -22,11 +22,3 @@ def cidr_to_int(cidr):
     n = n<<(32-cidr)
     return n
 
-for i in range (1,32):
-    n = cidr_to_int(i)
-    nb = bin(n)[2:]
-    assert(len(nb)==32)
-    for j in range(i):
-        assert(nb[j]=="1")
-    for j in range (i, 32):
-        assert(nb[j]=="0")
