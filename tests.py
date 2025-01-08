@@ -29,5 +29,11 @@ def test_cidr_to_int():
         for j in range (i, 32):
             assert(nb[j]=="0")
 
+def test_netmasking():
+    d=netmasking("10.216.191.255", "21", cidr = True)
+    d['네트워크 ID']== "10.216.184.0"
+    d['브로드캐스트 주소'] == "10.216.191.254"
+    d['호스트 수']==2045
+    
 if __name__ =="__main__":
     test_cidr_to_int()

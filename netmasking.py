@@ -46,8 +46,8 @@ def netmasking(ip_s, netmask_s, cidr = False):
         netmask = cidr_to_int(netmask_s)
     else: 
         netmask = ip_to_int(netmask_s)
-    network_addr = ip & netmask
+    network_id = ip & netmask
     netmask_neg = netmask^((1<<32)-1)
-    broadcast_addr = network_addr + netmask_neg
-    d = {'네트워크 주소': int_to_ip(network_addr), '브로드캐스트 주소': int_to_ip(broadcast_addr), '호스트 수': netmask_neg -2}
+    broadcast_addr = network_id + netmask_neg
+    d = {'네트워크 ID': int_to_ip(network_id), '브로드캐스트 주소': int_to_ip(broadcast_addr), '호스트 수': netmask_neg -2}
     return d
