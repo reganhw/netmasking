@@ -1,33 +1,32 @@
 def ip_to_int(ip_s):
     '''
-    Input: A valid ip address string.
-    Output: The ip converted to an integer.
+    Input: IP 문자열.
+    Output: IP에 해당하는 정수.
     '''
-    octets = ip_s.split(".")         
-    zeros = 24                      
-    ip= 0                     
-    for o in octets:
-        ip += int(o)<<zeros     
-        zeros -=8
-        
+    octets = ip_s.split(".")         # 옥텟들을 나누어 리스트에 저장
+    zeros = 24                       # 붙일 0의 수
+    ip= 0                            
+    for o in octets:                 # 옥텟마다...
+        ip += int(o)<<zeros          # 정수로 바꾼 뒤 0을 붙인다.
+        zeros -=8                    # 0의 수가 24, 16, 8, 0으로 감소한다.        
     return ip
 
 def int_to_ip(n):
     '''
-    Input: An integer n s.t. 0<=n<2^32
-    Output: n written in IP form
+    Input: 0<=n<2^32을 충족하는 정수
+    Output: n을 IP로 바꾼 것
     '''
     octets = []
-    for i in range(4):
-        octet = str(n&255)
-        octets.insert(0,octet)
-        n = n>>8
-    return '.'.join(octets)
+    for i in range(4):               
+        octet = str(n&255)           # n의 마지막 8비트를 문자열로 저장.
+        octets.insert(0,octet)       # 옥텟 리스트의 가장 앞에 넣는다.
+        n = n>>8                     # n의 마지막 8비트를 탈락시킴.
+    return '.'.join(octets)          # 옥텟 리스트를 IP 형태로 만든다.
 
 def cidr_to_int(cidr):
     '''
-    Input: A netmask in cidr format.
-    Output: The netmask converted to an integer
+    Input: CIDR 형태의 넷마스크
+    Output: 넷마스크를 정수로 바꾼 것
     '''
     cidr = int(cidr)
     n = (1<<cidr)-1
@@ -36,18 +35,18 @@ def cidr_to_int(cidr):
 
 def netmasking(ip_s, netmask_s, cidr = False):
     '''
-    Input: An ip address and a netmask, both strings with four octets
-    OR
-    An ip address with four octets (string), a netmask in CIDR form (string), and 'cidr=True'
-    Output: {network address, broadcast address, number of hosts}
+    Input: 네 개의 옥텟으로 된 IP 주소와 서브넷 마스크 OR 네 개의 옥텟으로 된 IP 주소, CIDR 서브넷 마스크, cidr = True
+    Output: {네트워크 ID, 브로드캐스트 주소, 호스트 수}
     '''
-    ip = ip_to_int(ip_s)
-    if cidr:
+    ip = ip_to_int(ip_s)                    # ip 주소를 정수로 변환한다.
+    if cidr:                                # 넷마스크가 CIDR일 경우:
         netmask = cidr_to_int(netmask_s)
-    else: 
+    else:                                   # 넷마스크가 CIDR이 아닐 경우:
         netmask = ip_to_int(netmask_s)
-    network_id = ip & netmask
-    netmask_neg = netmask^((1<<32)-1)
-    broadcast_addr = network_id + netmask_neg
-    d = {'네트워크 ID': int_to_ip(network_id), '브로드캐스트 주소': int_to_ip(broadcast_addr), '호스트 수': netmask_neg -1}
+
+    network_id = ip & netmask                  # 네트워크 ID는 ip & netmask다.
+    netmask_neg = netmask^((1<<32)-1)          # 넷마스크를 반전시킨다.
+    broadcast_addr = network_id + netmask_neg  # 브로드캐스트 주소를 구한다. 
+    
+    d = {'네트워크 ID': int_to_ip(network_id), '브로드캐스트 주소': int_to_ip(broadcast_addr), '호스트 수': netmask_neg -1} 
     return d
