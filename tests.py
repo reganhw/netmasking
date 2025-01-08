@@ -2,7 +2,7 @@ import random
 from netmasking import *
 
 def test_ip_to_int():
-    for i in range (10):
+    for i in range (10000):
         octets_int = [random.randint(0,255) for j in range(4)]
         ip ='.'.join([str(o) for o in octets_int])
 
