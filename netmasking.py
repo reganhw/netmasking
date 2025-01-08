@@ -1,16 +1,16 @@
-def ip_to_int(ip):
+def ip_to_int(ip_s):
     '''
     Input: A valid ip address string.
     Output: The ip converted to an integer.
     '''
-    octets = ip.split(".")         
+    octets = ip_s.split(".")         
     zeros = 24                      
-    ip_int = 0                     
+    ip= 0                     
     for o in octets:
-        ip_int += int(o)<<zeros     
+        ip += int(o)<<zeros     
         zeros -=8
         
-    return ip_int
+    return ip
 
 def int_to_ip(n):
     '''

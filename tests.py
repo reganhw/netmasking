@@ -21,7 +21,7 @@ def test_ip_to_int():
 
 def test_cidr_to_int():
     for i in range (1,32):
-        n = cidr_to_int(i)
+        n = cidr_to_int(str(i))
         nb = bin(n)[2:]
         assert(len(nb)==32)
         for j in range(i):
@@ -30,4 +30,4 @@ def test_cidr_to_int():
             assert(nb[j]=="0")
 
 if __name__ =="__main__":
-    test_ip_to_int()
+    test_cidr_to_int()
