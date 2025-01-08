@@ -29,6 +29,7 @@ def cidr_to_int(cidr):
     Input: A netmask in cidr format.
     Output: The netmask converted to an integer
     '''
+    cidr = int(cidr)
     n = (1<<cidr)-1
     n = n<<(32-cidr)
     return n
@@ -37,7 +38,7 @@ def netmasking(ip_s, netmask_s, cidr = False):
     '''
     Input: An ip address and a netmask, both strings with four octets
     OR
-    An ip address with four octets (string), a netmask in CIDR form (int), and 'cidr=True'
+    An ip address with four octets (string), a netmask in CIDR form (string), and 'cidr=True'
     Output: {network address, broadcast address, number of hosts}
     '''
     ip = ip_to_int(ip_s)
