@@ -20,13 +20,13 @@ def test_ip_to_int():
                 print('byte_in_ip: ',byte_in_ip )
 
 def test_cidr_to_int():
-    for i in range (1,32):
-        n = cidr_to_int(str(i))
+    for cidr in range (1,32):
+        n = cidr_to_int(str(cidr))
         nb = bin(n)[2:]
         assert(len(nb)==32)
-        for j in range(i):
+        for j in range(cidr):
             assert(nb[j]=="1")
-        for j in range (i, 32):
+        for j in range (cidr, 32):
             assert(nb[j]=="0")
 
 def test_netmasking():
