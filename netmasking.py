@@ -1,6 +1,5 @@
 def ip_to_int(ip):
     octets = ip.split(".")
-    
     zeros = 24
     ip_int = 0
     for o in octets:
