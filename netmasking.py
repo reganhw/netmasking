@@ -1,14 +1,22 @@
 def ip_to_int(ip):
-    octets = ip.split(".")
-    zeros = 24
-    ip_int = 0
+    '''
+    Input: A valid ip address string.
+    Output: The ip converted to an integer.
+    '''
+    octets = ip.split(".")         
+    zeros = 24                      
+    ip_int = 0                     
     for o in octets:
-        ip_int += int(o)<<zeros
+        ip_int += int(o)<<zeros     
         zeros -=8
         
     return ip_int
 
 def int_to_ip(n):
+    '''
+    Input: An integer n s.t. 0<=n<2^32
+    Output: n written in IP form
+    '''
     octets = []
     for i in range(4):
         octet = str(n&255)
@@ -17,15 +25,24 @@ def int_to_ip(n):
     return '.'.join(octets)
 
 def cidr_to_int(cidr):
+    '''
+    Input: A netmask in cidr format.
+    Output: The netmask converted to an integer
+    '''
     n = (1<<cidr)-1
     n = n<<(32-cidr)
     return n
 
 def netmasking(ip_s, netmask_s, cidr = False):
+    '''
+    Input: An ip address and a netmask, both strings with four octets
+    OR
+    An ip address with four octets (string), a netmask in CIDR form (int), and 'cidr=True'
+    Output: {network address, broadcast address, number of hosts}
+    '''
     ip = ip_to_int(ip_s)
     if cidr:
-        netmask = (1<<netmask_s) -1
-        netmask = netmask << (32-netmask_s)
+        netmask = cidr_to_int(netmask_s)
     else: 
         netmask = ip_to_int(netmask_s)
     network_addr = ip & netmask
