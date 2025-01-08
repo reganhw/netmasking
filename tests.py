@@ -29,11 +29,16 @@ def test_cidr_to_int():
         for j in range (cidr, 32):
             assert(nb[j]=="0")
 
+TEST_VECTORS = [
+    {'ip': "10.216.191.255", 'netmask': '21', 'cidr': True, '네트워크 ID': "10.216.184.0", '브로드캐스트 주소': "10.216.191.255", '호스트 수':2046 },
+    {'ip': "0.0.0.0", 'netmask': '9', 'cidr': True, '네트워크 ID': "0.0.0.0", '브로드캐스트 주소': '0.127.255.255', '호스트 수':2**23-2 }
+]
+
 def test_netmasking():
-    d=netmasking("10.216.191.255", "21", cidr = True)
-    d['네트워크 ID']== "10.216.184.0"
-    d['브로드캐스트 주소'] == "10.216.191.254"
-    d['호스트 수']==2045
+    for d in TEST_VECTORS:
+        d_res = netmasking(d['ip'], d['netmask'], d['cidr'])
+        for k in d_res:
+            assert(d_res[k] == d[k])
     
 if __name__ =="__main__":
-    test_cidr_to_int()
+    test_netmasking()
