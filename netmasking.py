@@ -50,3 +50,18 @@ def netmasking(ip_s, netmask_s, cidr = False):
     
     d = {'네트워크 ID': int_to_ip(network_id), '브로드캐스트 주소': int_to_ip(broadcast_addr), '호스트 수': netmask_neg -1} 
     return d
+
+
+#print(ip_to_int("192.168.1.1"))
+
+if __name__ =="__main__":
+    ip = input("IP: ")
+    netmask = input("서브넷마스크: ")
+    if '.' in netmask:
+        res = netmasking(ip, netmask)
+    else:
+        res = netmasking(ip, netmask, cidr = True)
+    
+    print(" ")
+    for k in res:
+        print(f'{k}: {res[k]}')

@@ -20,19 +20,21 @@ def test_ip_to_int():
                 print('byte_in_ip: ',byte_in_ip )
 
 def test_cidr_to_int():
-    for cidr in range (1,32):
-        n = cidr_to_int(str(cidr))
-        nb = bin(n)[2:]
-        assert(len(nb)==32)
-        for j in range(cidr):
+    for cidr in range (1,32):        
+        n = cidr_to_int(str(cidr))    
+        nb = bin(n)[2:]               
+        assert(len(nb)==32)          
+        for j in range(cidr):         
             assert(nb[j]=="1")
-        for j in range (cidr, 32):
+        for j in range (cidr, 32):    
             assert(nb[j]=="0")
 
 TEST_VECTORS = [
     {'ip': "10.216.191.255", 'netmask': '21', 'cidr': True, '네트워크 ID': "10.216.184.0", '브로드캐스트 주소': "10.216.191.255", '호스트 수':2046 },
     {'ip': "0.0.0.0", 'netmask': '9', 'cidr': True, '네트워크 ID': "0.0.0.0", '브로드캐스트 주소': '0.127.255.255', '호스트 수':2**23-2 },
-    
+    {'ip':'1.1.1.129','netmask':'255.255.255.128', 'cidr': False, '네트워크 ID':"1.1.1.128", '브로드캐스트 주소':'1.1.1.255', '호스트 수': 126 },
+    {'ip':'10.232.21.43','netmask':'255.255.255.240', 'cidr': False, '네트워크 ID':"10.232.21.32", '브로드캐스트 주소':'10.232.21.47', '호스트 수': 14 },
+    {'ip':'10.23.191.201','netmask':'255.224.0.0', 'cidr': False, '네트워크 ID':"10.0.0.0", '브로드캐스트 주소':'10.31.255.255', '호스트 수': 2**21-2 }
 ]
 
 def test_netmasking():
@@ -43,3 +45,4 @@ def test_netmasking():
     
 if __name__ =="__main__":
     test_netmasking()
+    
